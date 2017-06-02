@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Calc</title>
+    <meta name="author" content="Michal Weiser" />
+
+    <link rel="shortcut icon" href="favicon.png" />
+    <link href="calc.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="calc">
+    <div class="display">
+      <input id="display" type="text"></input>
+    </div>
+    <div class="pad">
+      <div class="numbers">
+        <button onclick="number(this);">7</button>
+        <button onclick="number(this);">4</button>
+        <button onclick="number(this);">1</button>
+        <button onclick="ac();">AC</button>
+      </div>
+      <div class="numbers">
+        <button onclick="number(this);">8</button>
+        <button onclick="number(this);">5</button>
+        <button onclick="number(this);">2</button>
+        <button onclick="number(this);">0</button>
+      </div>
+      <div class="numbers">
+        <button onclick="number(this);">9</button>
+        <button onclick="number(this);">6</button>
+        <button onclick="number(this);">3</button>
+        <button onclick="calculate();">=</button>
+      </div>
+      <div class="operations">
+        <button onclick="operation(this);">+</button>
+        <button onclick="operation(this);">-</button>
+        <button onclick="operation(this);">÷</button>
+        <button onclick="operation(this);">x</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    var display = window.document.getElementById('display');
+    var emptyFunction = function () {};
+    var operationFunction = emptyFunction;
+    //var a = null, b = null;
+    var slot = {
+      a: null,
+      b: null
+    };
+
+    var operations = {
+      '+': function (a,b) {
+        return a + b;
+      },
+      '-': function (a,b) {
+        return a - b;
+      },
+      'x': function (a,b) {
+        return a * b;
+      },
+      '÷': function (a,b) {
+        return a / b;
+      }
+    };
+
+    function assing(slotPointer, number) {
+      if (slot[slotPointer] === null) {
+        slot[slotPointer] = number;
+      } else {
+        slot[slotPointer] = slot[slotPointer].toString() + number;
+      }
+      display.value = slot[slotPointer];
+    }
+
+    function number(value) {
+      var number = parseInt(value.innerHTML);
+      if (operationFunction === emptyFunction) {
+        assing('a', number)
+      } else {
+        assing('b', number)
+      }
+    }
+
+    function ac() {
+      reset();
+      display.value = '';
+    }
+
+    function reset() {
+      slot.a = null;
+      slot.b = null;
+      operationFunction = emptyFunction;
+    }
+
+    function calculate() {
+      if (slot.b !== null && operationFunction !== emptyFunction) {
+        var result = operationFunction(slot.a, slot.b);
+        reset();
+        display.value = result;
+      }
+    }
+
+    function operation(value) {
+      operationFunction = operations[value.innerHTML];
+    }
+  </script>
+</body>
+</html>

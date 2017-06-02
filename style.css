@@ -1,0 +1,210 @@
+.intro {
+    background: url(background.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.intro header {
+  position: absolute;
+  top: 50%;
+  margin-left: 14vh;
+}
+
+.intro header h1 {
+    color: white;
+    font-size: 10vmin;
+    line-height: 10vmin;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.intro header h2 {
+    color: white;
+    font-size: 3vmin;
+}
+
+.intro footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: black;
+    background-image: url(disc.png);
+    background-position: 95% 50%;
+    background-repeat: no-repeat;
+    background-size: 15%;
+    border-top: 3px solid white;
+}
+
+.hi, .thankyou {
+  text-align: center;
+}
+
+.hi h1,
+.thankyou h1 {
+    font-size: 15vmin;
+    font-weight: 800;
+}
+
+.hi .twitter {
+    font-size: initial;
+    line-height: normal;
+}
+
+.hi .twitter a {
+    font-size: 2vmin;
+    background: none;
+    color: #0d99f1;
+}
+
+.hello {
+    text-align: center;
+}
+
+.badge {
+  height: 60px;
+}
+
+.arrow {
+  height: 30px;
+}
+
+.badge.big {
+  height: 100px;
+}
+
+.badge.small {
+  height: 40px;
+}
+
+#canvas_container {
+    width: 1000px;
+}
+
+.angry {
+  position: absolute;
+  bottom: 71px;
+  width: 165px;
+  left: 503px;
+  height: 133px;
+  display: none;
+}
+
+.angry[src] {
+  display: block;
+}
+
+.list {
+    text-align: center;
+    line-height: 90px;
+}
+
+.list h5 {
+    visibility: hidden;
+    transition: visibility 1s ease;
+}
+
+.list.active h5 {
+    visibility: visible;
+}
+
+.list.highlight {
+    opacity: 1.0 !important;
+}
+
+.list a {
+    display: inline-block;
+}
+
+/*.needs {
+    position: absolute;
+    top: -48px;
+    left: 253px;
+}*/
+
+.needs-badges {
+    position: absolute;
+    top: -48px;
+    left: 853px;
+}
+
+.needs-badges img {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pipeline {
+  font-size: 25px;
+  color: #e74c3c;
+}
+
+.examplepipelines {
+  width: 900px;
+}
+
+.slush-meanjs .styles,
+.slush-meanjs .lang,
+.react-gulp .styles {
+  position: relative;
+  display: inline-block;
+}
+
+.react-gulp .styles {
+  left: 342px;
+}
+
+.slush-meanjs .lang {
+  left: 110px;
+}
+
+.slush-meanjs .endarrow {
+  left: 200px;
+}
+
+.slush-meanjs .styles {
+  left: 340px;
+}
+
+.slush-meanjs .packages,
+.slush-meanjs .end,
+.react-gulp .packages,
+.react-gulp .end,
+.slush-meanjs .endarrow {
+  position: relative;
+  display: inline-block;
+  top: 30px;
+}
+
+#historicalcode {
+    font-size: 6vmin;
+}
+
+.position {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color:#f80000;
+}
+
+.code .red {
+    color: #f29111;
+}
+
+.code .blue {
+    color: #00758f;
+}
+
+.code .green {
+    color: #3a913f;
+}
+
+.hmm {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: -200px;
+    top: 150px;
+}

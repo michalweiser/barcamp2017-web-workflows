@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>BarCamp 2017 | Web Front-End Workflow | by Michal Weiser @michal_weiser</title>
+
+    <meta name="description" content="Presentation for BarCamp 2017" />
+    <meta name="author" content="Michal Weiser" />
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <script src="raphael.min.js"></script>
+    <script>
+      window.invert = function invert() {
+          // the css we are going to inject
+          var css = 'html {-webkit-filter: invert(100%);' +
+            '-moz-filter: invert(100%);' +
+            '-o-filter: invert(100%);' +
+            '-ms-filter: invert(100%); }',
+
+            head = document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+          // a hack, so you can "invert back" clicking the bookmarklet again
+          if (!window.counter) { window.counter = 1; } else {
+          window.counter++;
+            if (window.counter % 2 == 0) { var css = 'html {-webkit-filter: invert(0%); -moz-filter:    invert(0%); -o-filter: invert(0%); -ms-filter: invert(0%); }' }
+          };
+
+          style.type = 'text/css';
+          if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+          } else {
+            style.appendChild(document.createTextNode(css));
+          }
+
+          //injecting the css to the head
+          document.body.style.backgroundColor = "white";
+          head.appendChild(style);
+      }
+    </script>
+</head>
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+<div id="impress">
+    <div id="hello" class="step hello" data-x="-1100" data-y="-1500">
+      <a href="http://www.barcampbrno.cz/" title="BarCamp Brno" target="_blank"><img alt="BarCamp Brno" src="img/barcamp.png" class="badge"></a>
+      <h3>Ahoj!</h3>
+    </div>
+    <div id="hi" class="step hi" data-x="400" data-y="-1500">
+        <a href="https://www.linkedin.com/in/michalweiser/" title="Michał Weiser" target="_blank"><img alt="Michał Weiser" src="img/me.png" class="badge big"></a>
+        <h3>Michał <b>Weiser</b></h3>
+        <nav class="twitter">
+          <a href="https://twitter.com/michal_weiser">@michal_weiser</a><br>
+          <a href="https://www.linkedin.com/in/michalweiser/"><small class="position">Interaction Design Engineer <br>NetSuite | Oracle</small></a>
+        </nav>
+    </div>
+
+    <div id="timeline" class="step" data-x="2600" data-y="-1500" scale="4">
+      <div id="canvas_container"></div>
+      <script>
+        var paper = new Raphael(document.getElementById('canvas_container'), 1000, 500);
+        var linePosition = 450;
+        function tickAt(where, size, text) {
+          var line = paper.path( 'M' + where + ',' + (linePosition - size) + ' L' + where + ',' + linePosition );
+          var text = paper.text(where, linePosition + 20, text);
+          line.attr({
+            'stroke': 'white',
+            'stroke-width': 3
+          });
+          text.attr({
+            'fill': 'white',
+            'stroke-width': 0,
+            'font-family': 'Arial',
+            'font-size': 20
+          });
+          return line;
+        }
+
+        function badge(paper, where, fromLine, width, height, src, attr) {
+          var badge = paper.image(src, where - (width/2), linePosition - fromLine - height, width, height);
+          attr && badge.attr(attr);
+          return badge;
+        }
+
+        badge(paper, 750, -1, 300, 200, 'img/messhalf.jpg');
+        var line = paper.path( 'M50,' + linePosition + ' L900,' + linePosition );
+        line.attr({
+          'stroke': 'white',
+          'stroke-width': 3
+        });
+
+        badge(paper, 50, 30, 40, 40, 'img/html.jpg', {
+          href: 'https://en.wikipedia.org/wiki/HTML',
+          target: '_blank',
+          title: 'HTML'
+        });
+        tickAt(50, 20, '1993');
+        badge(paper, 100, 30, 40, 40, 'img/js.png', {
+          href: 'https://en.wikipedia.org/wiki/JavaScript',
+          target: '_blank',
+          title: 'JavaScript'
+        });
+        tickAt(100, 20, '1995');
+        badge(paper, 150, 30, 40, 40, 'img/css.png', {
+          href: 'https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
+          target: '_blank',
+          title: 'CSS'
+        });
+        tickAt(150, 20, '1996');
+        tickAt(450, 20, '2006');
+        badge(paper, 450, 30, 40, 40, 'img/jquery.png', {
+          href: 'https://jquery.com/',
+          target: '_blank',
+          title: 'jQuery'
+        });
+        tickAt(550, 20, '2009');
+        badge(paper, 550, 30, 40, 40, 'img/nodejs.png', {
+          href: 'https://nodejs.org/en/',
+          target: '_blank',
+          title: 'node.js'
+        });
+        tickAt(650, 20, '2011');
+        badge(paper, 650, 30, 70, 30, 'img/npm.svg', {
+          href: 'https://www.npmjs.com/',
+          target: '_blank',
+          title: 'npm'
+        });
+
+        tickAt(800, 20, '2015');
+        badge(paper, 800, 30, 40, 40, 'img/react.png', {
+          href: '',
+          target: '_blank',
+          title: 'React'
+        });
+
+        badge(paper, 890, 30, 40, 40, 'img/webassembly.png', {
+          href: '',
+          target: '_blank',
+          title: 'WebAssembly'
+        });
+        tickAt(900, 200, 'now');
+      </script>
+    </div>
+
+    <div id="historicalcode" class="step" data-x="1000" data-y="-2500" style="width: 580px;">
+      <pre>
+          <code class="code">
+<span class="red">var</span> <span class="blue">form</span> = <span class="blue">document.forms[<span class="green">0</span>]</span>;
+<span class="red">if</span> (<span class="blue">form.name.length</span> == <span class="green">0</span>) {
+    <span class="red">alert</span>(<span class="green">'Please fill your name.'</span>);
+    <span class="red">return</span> <span class="blue">false</span>;
+}
+          </code>
+      </pre>
+    </div>
+
+    <div id="historical" class="step list" data-x="2800" data-y="-2500" style="width: 430px;">
+      <h5>Historické knihovny</h5>
+      <a href="https://jquery.com/" title="jQuery" target="_blank"><img alt="jQuery" src="img/jquery.png" class="badge small"></a>
+      <a href="https://jqueryui.com/" title="jQuery UI" target="_blank"><img alt="jQuery UI" src="img/jqueryui.gif" class="badge small"></a>
+      <a href="http://yuilibrary.com/" title="YUI" target="_blank"><img alt="YUI" src="img/yui.png" class="badge small"></a>
+      <br>
+      <a href="https://dojotoolkit.org/" title="dojo" target="_blank"><img alt="dojo" src="img/dojo.png" class="badge"></a>
+      <a href="https://www.sencha.com/products/extjs/" title="Ext JS" target="_blank"><img alt="Ext JS" src="img/extjs.png" class="badge"></a>
+      <a href="http://prototypejs.org/" title="prototype" target="_blank"><img alt="prototype" src="img/prototype.png" class="badge"></a>
+      <br>
+      <a href="http://mootools.net/" title="mootools" target="_blank"><img alt="mootools" src="img/mootools.png" class="badge"></a>
+      <br>
+      <a href="http://vanilla-js.com/" title="Vanilla JS" target="_blank"><img alt="Vanilla JS" src="img/vanilla.png" class="badge"></a>
+    </div>
+
+    <div id="historicalworkflow" class="step" data-x="4000" data-y="-2500" style="width: 580px;">
+      <h5>Historická pipeline</h5>
+      <a href="https://www.w3.org/TR/html4/" title="HTML4" target="_blank"><img alt="HTML4" src="img/html.jpg" class="badge small"></a>
+      <img src="img/arrow.png" class="arrow">
+      <a href="http://vanilla-js.com/" title="Vanilla.js" target="_blank"><img alt="Vanilla.js" src="img/vanilla.png" class="badge small"></a>
+      <img src="img/arrow.png" class="arrow">
+      <a href="http://yui.github.io/yuicompressor/" title="YUI Compressor" target="_blank"><img alt="YUI Compressor" src="img/yui.png" class="badge small"></a>
+      <img src="img/arrow.png" class="arrow">
+      <a href="https://en.wikipedia.org/wiki/Internet_Explorer_6" title="IE6" target="_blank"><img alt="IE6" src="img/ie6.png" class="badge small"></a>
+    </div>
+
+    <div id="timelineview" class="step" data-x="4000" data-y="-1520" data-z="20" scale="2">
+      <ul class="needs">
+        <li>uživatelsky přívětivá</li>
+        <li>vždy trendy vzhled</li>
+        <li>responsivní</li>
+        <li>funguje na mobilních telefonech</li>
+        <li>chová se jako nativní aplikace</li>
+        <li>modulární</li>
+        <li>dobře testovatelná</li>
+        <li>jednoduchá na vývoj</li>
+      </ul>
+    </div>
+
+    <div id="technologies" class="step" data-x="3700" data-y="-200" data-scale="2">
+      <img src="img/hmm.png" alt="hmm" class="hmm">
+    </div>
+
+    <div id="managers" class="step list" data-x="3000" data-y="-500" style="width: 280px;">
+      <h5>Správci balíčků</h5>
+      <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge big"></a>
+      <a href="https://yarnpkg.com/" title="Yarn" target="_blank"><img alt="Yarn" src="img/yarn.png" class="badge big"></a>
+      <br>
+      <a href="http://bower.io/" title="Bower" target="_blank"><img alt="Bower" src="img/bower.png" class="badge big"></a>
+      <a href="http://jspm.io/" title="jspm" target="_blank"><img alt="jspm" src="img/jspm.svg" class="badge big"></a>
+    </div>
+
+    <div id="styleprocessors" class="step list" data-x="3000" data-y="0" style="width: 330px;">
+      <h5>Style processory</h5>
+      <a href="http://the-echoplex.net/csscrush/" title="CSS Crush" target="_blank"><img alt="CSS Crush" src="img/csscrush.svg" class="badge"></a>
+      <a href="http://www.myth.io/" title="Myth" target="_blank"><img alt="Myth" src="img/myth.svg" class="badge"></a>
+      <br>
+      <a href="http://lesscss.org/" title="Less" target="_blank"><img alt="Less" src="img/less.png" class="badge big"></a>
+      <br>
+      <a href="http://sass-lang.com/" title="Sass" target="_blank"><img alt="Sass" src="img/sass.svg" class="badge big"></a>
+      <a href="http://stylus-lang.com/" title="Stylus" target="_blank"><img alt="Stylus" src="img/stylus.png" class="badge big"></a>
+      <br>
+      <a href="https://github.com/postcss/postcss" title="PostCSS" target="_blank"><img alt="PostCSS" src="img/postcss.svg" class="badge"></a>
+      <a href="https://github.com/postcss/autoprefixer" title="AutoPrefixer" target="_blank"><img alt="AutoPrefixer" src="img/autoprefixer.png" class="badge"></a>
+      <br>
+      <a href="https://modernizr.com/" title="Modernizr" target="_blank"><img alt="Modernizr" src="img/modernizr.png" class="badge"></a>
+    </div>
+
+    <div id="styleframeworks" class="step list" data-x="3300" data-y="0" style="width: 250px;">
+      <h5>Frameworky pro styly</h5>
+      <a href="http://getbootstrap.com/" title="Bootstrap" target="_blank"><img alt="Bootstrap" src="img/bootstrap.jpg" class="badge"></a>
+      <a href="http://foundation.zurb.com/" title="Zubr Foundation" target="_blank"><img alt="Zubr Foundation" src="img/zubr-foundation.svg" class="badge"></a>
+      <br>
+      <a href="http://compass-style.org/" title="Compass" target="_blank"><img alt="Compass" src="img/compass.png" class="badge"></a>
+      <a href="http://cardinalcss.com/" title="CardinalCSS" target="_blank"><img alt="CardinalCSS" src="img/cardinalcss.png" class="badge"></a>
+      <br>
+      <a href="http://cssreset.com/" title="CSS Reset" target="_blank"><img alt="CSS Reset" src="img/cssreset.gif" class="badge"></a>
+    </div>
+
+    <div id="modules" class="step list" data-x="3300" data-y="-400" style="width: 250px;">
+      <h5>Správci modulů</h5>
+      <a href="http://stealjs.com/" title="StealJS" target="_blank"><img alt="StealJS" src="img/stealjs.svg" class="badge small"></a>
+      <a href="https://github.com/systemjs/systemjs" title="systemjs" target="_blank"><img alt="systemjs" src="img/systemjs.png" class="badge small"></a>
+      <br>
+      <a href="https://webpack.github.io/" title="webpack" target="_blank"><img alt="webpack" src="img/webpack.svg" class="badge big"></a>
+      <a href="http://requirejs.org/" title="RequireJS" target="_blank"><img alt="RequireJS" src="img/requirejs.png" class="badge big"></a>
+      <br>
+      <a href="http://browserify.org/" title="browserify" target="_blank"><img alt="browserify" src="img/browserify.png" class="badge"></a>
+      <a href="https://rollupjs.org/" title="rollup" target="_blank"><img alt="rollup" src="img/rollup.svg" class="badge"></a>
+    </div>
+
+    <div id="langext" class="step list" data-x="3600" data-y="-400" style="width: 280px;">
+      <h5>Rozšíření jazyka</h5>
+      <a href="https://www.dartlang.org/" title="Dart" target="_blank"><img alt="Dart" src="img/dart.png" class="badge"></a>
+      <a href="http://coffeescript.org/" title="Coffee Script" target="_blank"><img alt="Coffee Script" src="img/coffeescript.png" class="badge"></a>
+      <br>
+      <a href="http://livescript.net/" title="LiveScript" target="_blank"><img alt="LiveScript" src="img/livescript.png" class="badge"></a>
+      <br>
+      <a href="https://www.typescriptlang.org/" title="TypeScript" target="_blank" target="_blank"><img alt="TypeScript" src="img/ts.png" class="badge"></a>
+      <a href="https://facebook.github.io/react/docs/jsx-in-depth.html" title="JSX" target="_blank" target="_blank"><img alt="JSX" src="img/jsx.png" class="badge"></a>
+      <a href="http://asmjs.org/" title="asm.js" target="_blank" target="_blank"><img alt="asm.js" src="img/asmjs.png" class="badge"></a>
+      <br>
+      <a href="https://es5.github.io/" title="ES5" target="_blank" target="_blank"><img alt="ES5" src="img/es5.png" class="badge"></a>
+      <a href="https://nodejs.org/en/docs/es6/" title="ES6" target="_blank" target="_blank"><img alt="ES6" src="img/es6.jpg" class="badge"></a>
+      <a href="http://www.2ality.com/2016/01/ecmascript-2016.html" title="ES7" target="_blank" target="_blank"><img alt="ES7" src="img/es7.png" class="badge"></a>
+      <br>
+      <a href="http://haxe.org/" title="Haxe" target="_blank" target="_blank"><img alt="Haxe" src="img/haxe.png" class="badge"></a>
+      <a href="https://kotlinlang.org/" title="Kotlin" target="_blank" target="_blank"><img alt="Kotlin" src="img/kotlin.png" class="badge"></a>
+      <a href="http://elm-lang.org/" title="Elm" target="_blank" target="_blank"><img alt="Elm" src="img/elm.png" class="badge"></a>
+    </div>
+
+    <div id="transpilers" class="step list" data-x="3600" data-y="100" style="width: 340px">
+      <h5>Transpilery</h5>
+      <a href="https://babeljs.io/" title="Babel" target="_blank"><img alt="Babel" src="img/babel.png" class="badge big"></a>
+      <br>
+      <a href="https://github.com/google/traceur-compiler" title="Traceur Compiler" target="_blank"><img alt="Traceur Compiler" src="img/traceur.svg" class="badge big"></a>
+      <a href="https://developers.google.com/closure/compiler/" title="Closure Compiler" target="_blank"><img alt="Closure Compiler" src="img/closurecompiler.png" class="badge big"></a>
+    </div>
+
+    <div id="frameworks" class="step list" data-x="3950" data-y="0" style="width: 490px">
+      <h5>Frameworky</h5>
+      <a href="http://cycle.js.org/" title="Cycle.js" target="_blank"><img alt="Cycle.js" src="img/cyclejs.svg" class="badge"></a>
+      <a href="https://vuejs.org/" title="Vue.js" target="_blank"><img alt="Vue.js" src="img/vuejs.png" class="badge"></a>
+      <a href="http://aurelia.io/" title="aurelia.io" target="_blank"><img alt="aurelia.io" src="img/aurelia.png" class="badge"></a>
+      <a href="http://riotjs.com/" title="riot" target="_blank"><img alt="riot" src="img/riot.png" class="badge"></a>
+      <br>
+      <a href="https://angularjs.org/" title="AngularJS" target="_blank"><img alt="AngularJS" src="img/angular.png" class="badge big"></a>
+      <a href="https://facebook.github.io/react/" title="React" target="_blank"><img alt="React" src="img/react.png" class="badge big"></a>
+      <a href="http://emberjs.com/" title="Ember.js" target="_blank"><img alt="Ember.js" src="img/ember.png" class="badge big"></a>
+      <a href="https://github.com/reactjs/redux" title="Redux" target="_blank" target="_blank"><img alt="Redux" src="img/redux.png" class="badge big"></a>
+      <br>
+      <a href="http://backbonejs.org/" title="backbone.js" target="_blank"><img alt="backbone.js" src="img/backbone.svg" class="badge"></a>
+      <a href="https://www.meteor.com/" title="meteor" target="_blank"><img alt="meteor" src="img/meteor.png" class="badge"></a>
+      <a href="https://www.polymer-project.org/1.0/" title="polymer" target="_blank"><img alt="polymer" src="img/polymer.png" class="badge"></a>
+      <a href="https://www.sencha.com/products/extjs/" title="Ext JS" target="_blank"><img alt="Ext JS" src="img/extjs.png" class="badge"></a>
+      <br>
+      <a href="https://canjs.com/" title="CanJS" target="_blank"><img alt="CanJS" src="img/canjs.png" class="badge small"></a>
+      <a href="http://spine.github.io/" title="SpineJS" target="_blank"><img alt="SpineJS" src="img/spine.png" class="badge small"></a>
+      <br>
+      <a href="http://knockoutjs.com/" title="knockout" target="_blank"><img alt="knockout" src="img/knockout.png" class="badge small"></a>
+    </div>
+
+    <div id="latestframework" class="step list" data-x="3950" data-y="300" data-rotate-x="-30" style="width: 550px">
+      <a id="latestframeworka" href="https://dayssincelastjavascriptframework.com/" target="_blank">nejnovější framework?</a>
+    </div>
+
+    <div id="platform" class="step list" data-x="3950" data-y="-500" style="width: 280px;">
+      <h5>Platformy</h5>
+      <a href="https://www.xamarin.com/" title="Xamarin" target="_blank"><img alt="Xamarin" src="img/xamarin.svg" class="badge"></a>
+      <a href="https://cordova.apache.org/" title="Cordova" target="_blank"><img alt="Cordova" src="img/cordova.png" class="badge"></a>
+      <a href="http://ionicframework.com/" title="ionic" target="_blank"><img alt="ionic" src="img/ionic.png" class="badge"></a>
+      <br>
+      <a href="https://facebook.github.io/react-native/" title="React Native" target="_blank"><img alt="React Native" src="img/reactnative.png" class="badge big"></a>
+      <br>
+      <a href="http://electron.atom.io/" title="Electron" target="_blank"><img alt="Electron" src="img/electron.png" class="badge"></a>
+      <a href="https://www.nativescript.org/" title="NativeScript" target="_blank"><img alt="NativeScript" src="img/nativescript.jpeg" class="badge"></a>
+    </div>
+
+    <div id="libraries" class="step list" data-x="4250" data-y="-400" style="width: 260px;">
+      <h5>Knihovny</h5>
+      <a href="http://reactivex.io/" title="RxJS" target="_blank"><img alt="RxJS" src="img/rx.png" class="badge"></a>
+      <a href="https://lodash.com/" title="lodash" target="_blank"><img alt="lodash" src="img/lodash.png" class="badge"></a>
+      <a href="https://pouchdb.com/" title="PouchDB" target="_blank"><img alt="PouchDB" src="img/pouchdb.png" class="badge"></a>
+      <br>
+      <a href="http://dmitrybaranovskiy.github.io/raphael/" title="Raphael" target="_blank"><img alt="Raphael" src="img/raphaeljs.png" class="badge"></a>
+      <a href="https://d3js.org/" title="D3" target="_blank"><img alt="D3" src="img/d3.svg" class="badge"></a>
+      <a href="http://www.telerik.com/kendo-ui" title="Kendo UI" target="_blank"><img alt="Kendo UI" src="img/kendoui.png" class="badge"></a>
+      <br>
+      <a href="http://momentjs.com/" title="Moment" target="_blank"><img alt="Moment" src="img/moment.png" class="badge"></a>
+      <a href="http://socket.io/" title="socket.io" target="_blank"><img alt="socket.io" src="img/socketio.gif" class="badge"></a>
+      <br>
+      <a href="http://www.babylonjs.com/" title="Babylon" target="_blank"><img alt="Babylon" src="img/babylon.svg" class="badge"></a>
+    </div>
+
+    <div id="checkers" class="step list" data-x="4330" data-y="80" style="width: 260px;">
+      <h5>Kontroly</h5>
+      <a href="http://jscs.info/" title="JSCS" target="_blank"><img alt="JSCS" src="img/jscs.png" class="badge big"></a>
+      <a href="http://eslint.org/" title="ESLint" target="_blank"><img alt="ESLint" src="img/eslint.svg" class="badge big"></a>
+      <br>
+      <a href="http://jshint.com/" title="JSHint" target="_blank"><img alt="JSHint" src="img/jshint.png" class="badge"></a>
+      <a href="https://palantir.github.io/tslint/" title="TSLint" target="_blank"><img alt="TSLint" src="img/tslint.png" class="badge small"></a>
+      <br>
+      <a href="http://www.jslint.com/" title="JSLint" target="_blank"><img alt="JSLint" src="img/jslint.png" class="badge small"></a>
+      <a href="http://flowtype.org/" title="Flow" target="_blank" target="_blank"><img alt="Flow" src="img/flow.png" class="badge"></a>
+    </div>
+
+    <div id="testing" class="step list" data-x="4600" data-y="70" style="width: 350px;">
+      <h5>Testovací nástroje</h5>
+      <a href="http://phantomjs.org/" title="PhantomJS" target="_blank"><img alt="PhantomJS" src="img/phantomjs.png" class="badge"></a>
+      <a href="https://karma-runner.github.io/0.13/index.html" title="Karma" target="_blank"><img alt="Karma JS" src="img/karma.png" class="badge"></a>
+      <a href="http://docs.seleniumhq.org/" title="Selenium" target="_blank"><img alt="Selenium" src="img/selenium.png" class="badge"></a>
+      <a href="https://www.browsersync.io/" title="BrowserSync" target="_blank"><img alt="BrowserSync" src="img/browsersync.png" class="badge"></a>
+      <br>
+      <a href="http://jasmine.github.io/" title="Jasmine" target="_blank"><img alt="Jasmine" src="img/jasmine.png" class="badge"></a>
+      <a href="https://mochajs.org/" title="Mocha" target="_blank"><img alt="Mocha" src="img/mocha.png" class="badge"></a>
+      <a href="http://chaijs.com/" title="Chai" target="_blank"><img alt="Chai" src="img/chai.png" class="badge"></a>
+      <a href="http://angular.github.io/protractor/" title="Protractor" target="_blank"><img alt="Protractor" src="img/protractor.png" class="badge"></a>
+      <br>
+      <a href="https://facebook.github.io/jest/" title="Jest" target="_blank"><img alt="Jest" src="img/jest.png" class="badge"></a>
+      <a href="http://sinonjs.org/" title="Sinon JS" target="_blank"><img alt="Sinon JS" src="img/sinonjs.png" class="badge"></a>
+    </div>
+
+    <div id="pipeline" class="step list" data-x="4450" data-y="-300" style="width: 200px;">
+      <h5>Správci pipeline</h5>
+      <a href="http://gruntjs.com/" title="Grunt" target="_blank"><img alt="Grunt" src="img/grunt.png" class="badge big"></a>
+      <a href="http://gulpjs.com/" title="Gulp" target="_blank"><img alt="Gulp" src="img/gulp.png" class="badge big"></a>
+      <br>
+      <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge small"></a>
+      <br>
+      <a href="http://broccolijs.com/" title="Broccoli.js" target="_blank"><img alt="Broccoli.js" src="img/broccoli.png" class="badge"></a>
+    </div>
+
+    <div id="devhelp" class="step list" data-x="4650" data-y="-200" style="width: 220px;">
+      <h5>Vývojové nástroje</h5>
+      <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" title="Source Maps" target="_blank"><img alt="Source Maps" src="img/sourcemaps.png" class="badge"></a>
+      <a href="http://livereload.com/" title="LiveReload" target="_blank"><img alt="LiveReload" src="img/livereload.png" class="badge"></a>
+    </div>
+
+    <div id="services" class="step list" data-x="4650" data-y="-520" style="width: 210px;">
+      <h5>Servisy</h5>
+      <a href="https://saucelabs.com/" title="SauceLabs" target="_blank"><img alt="SauceLabs" src="img/saucelabs.png" class="badge"></a>
+      <br>
+      <a href="https://www.rainforestqa.com/" title="Rainforest QA" target="_blank"><img alt="Rainforest QA" src="img/rainforest.png" class="badge"></a>
+      <br>
+      <a href="https://www.browserstack.com/" title="BrowserStack" target="_blank"><img alt="BrowserStack" src="img/browserstack.png" class="badge"></a>
+      <a href="https://travis-ci.org/" title="Travis CI" target="_blank"><img alt="Travis CI" src="img/travis.png" class="badge"></a>
+      <br>
+      <a href="https://about.gitlab.com/" title="GitLab" target="_blank"><img alt="GitLab" src="img/gitlab.png" class="badge"></a>
+      <a href="https://github.com/" title="GitHub" target="_blank"><img alt="GitHub" src="img/github.png" class="badge"></a>
+    </div>
+
+    <div id="webdevelopment" class="step" data-x="6000" data-y="-200">
+      <img src="img/webdev.jpg">
+      <img id="angry" class="angry">
+    </div>
+
+    <div id="scafolding" class="step list" data-x="7200" data-y="-200" style="width: 300px;">
+      <h5>Scafolding</h5>
+      <a href="http://yeoman.io/" title="Yeoman" target="_blank"><img alt="Yeoman" src="img/yeoman.png" class="badge big"></a>
+      <a href="http://slushjs.github.io/" title="Slush" target="_blank"><img alt="Slush" src="img/slush.png" class="badge big"></a>
+      <a href="https://github.com/search?l=JavaScript&o=desc&q=boilerplate&s=stars&type=Repositories" title="Boilerplate" target="_blank"><img alt="Boilerplate" src="img/boilerplate.png" class="badge"></a>
+    </div>
+
+    <div id="examplepipelinesboilerplate" class="step examplepipelines" data-x="8800" data-y="-200">
+      <h5>PIPELINY</h5>
+      <div class="react-redux-universal-hot-example">
+        <a href="https://github.com/erikras/react-redux-universal-hot-example" class="pipeline" title="react-redux-universal-hot-example" target="_blank">react-redux-universal-hot-example:</a>
+        <br>
+        <a href="https://github.com/search?l=JavaScript&o=desc&q=boilerplate&s=stars&type=Repositories" title="Boilerplate" target="_blank"><img alt="Boilerplate" src="img/boilerplate.png" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://facebook.github.io/react/" title="React" target="_blank"><img alt="React" src="img/react.png" class="badge small"></a>
+        <a href="https://github.com/reactjs/redux" title="Redux" target="_blank" target="_blank"><img alt="Redux" src="img/redux.png" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="http://www.2ality.com/2016/01/ecmascript-2016.html" title="ES7" target="_blank" target="_blank"><img alt="ES7" src="img/es7.png" class="badge small"></a>
+        <a href="https://babeljs.io/" title="Babel" target="_blank"><img alt="Babel" src="img/babel.png" class="badge small"></a>
+        <a href="https://webpack.github.io/" title="webpack" target="_blank"><img alt="webpack" src="img/webpack.svg" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="http://eslint.org/" title="ESLint" target="_blank"><img alt="ESLint" src="img/eslint.svg" class="badge small"></a>
+        <a href="https://mochajs.org/" title="Mocha" target="_blank"><img alt="Mocha" src="img/mocha.png" class="badge small"></a>
+      </div>
+      <div class="react-typescript-boilerplate">
+        <a href="https://github.com/keokilee/react-typescript-boilerplate" class="pipeline" title="react-typescript-boilerplate" target="_blank">react-typescript-boilerplate:</a>
+        <br>
+        <a href="https://github.com/search?l=JavaScript&o=desc&q=boilerplate&s=stars&type=Repositories" title="Boilerplate" target="_blank"><img alt="Boilerplate" src="img/boilerplate.png" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://www.typescriptlang.org/" title="TypeScript" target="_blank" target="_blank"><img alt="TypeScript" src="img/ts.png" class="badge small"></a>
+        <a href="https://facebook.github.io/react/" title="React" target="_blank"><img alt="React" src="img/react.png" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://babeljs.io/" title="Babel" target="_blank"><img alt="Babel" src="img/babel.png" class="badge small"></a>
+        <a href="https://webpack.github.io/" title="webpack" target="_blank"><img alt="webpack" src="img/webpack.svg" class="badge small"></a>
+        <img src="img/arrow.png" class="arrow">
+        <a href="https://palantir.github.io/tslint/" title="TSLint" target="_blank"><img alt="TSLint" src="img/tslint.png" class="badge small"></a>
+      </div>
+    </div>
+
+    <div id="examplepipelinesscafolding" class="step examplepipelines" data-x="10800" data-y="-200">
+      <div class="react-gulp">
+        <a href="https://github.com/randylien/generator-react-gulp-browserify" class="pipeline" title="generator-react-gulp-browserify" target="_blank">generator-react-gulp-browserify:</a>
+        <br>
+        <div class="packages">
+          <a href="http://yeoman.io/" title="Yeoman" target="_blank"><img alt="Yeoman" src="img/yeoman.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge small"></a>
+          <a href="http://bower.io/" title="Bower" target="_blank"><img alt="Bower" src="img/bower.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+        </div>
+        <a href="http://coffeescript.org/" title="Coffee Script" target="_blank"><img alt="Coffee Script" src="img/coffeescript.png" class="badge small"></a>
+        <a href="https://facebook.github.io/react/" title="React" target="_blank"><img alt="React" src="img/react.png" class="badge small"></a>
+        <a href="https://jquery.com/" title="jQuery" target="_blank"><img alt="jQuery" src="img/jquery.png" class="badge small"></a>
+        <div class="end">
+          <img src="img/arrow.png" class="arrow"> ...
+        </div>
+        <br>
+        <div class="styles">
+          <a href="http://sass-lang.com/" title="Sass" target="_blank"><img alt="Sass" src="img/sass.svg" class="badge small"></a>
+          <a href="http://compass-style.org/" title="Compass" target="_blank"><img alt="Compass" src="img/compass.png" class="badge small"></a>
+          <a href="http://getbootstrap.com/" title="Bootstrap" target="_blank"><img alt="Bootstrap" src="img/bootstrap.jpg" class="badge small"></a>
+        </div>
+        <br>
+        <br>
+        <div>
+          ... <img src="img/arrow.png" class="arrow">
+          <a href="http://gulpjs.com/" title="Gulp" target="_blank"><img alt="Gulp" src="img/gulp.png" class="badge small"></a>
+          <a href="http://browserify.org/" title="browserify" target="_blank"><img alt="browserify" src="img/browserify.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" title="Source Maps" target="_blank"><img alt="Source Maps" src="img/sourcemaps.png" class="badge small"></a>
+          <a href="https://www.browsersync.io/" title="BrowserSync" target="_blank"><img alt="BrowserSync" src="img/browsersync.png" class="badge small"></a>
+          <a href="https://modernizr.com/" title="Modernizr" target="_blank"><img alt="Modernizr" src="img/modernizr.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://mochajs.org/" title="Mocha" target="_blank"><img alt="Mocha" src="img/mocha.png" class="badge small"></a>
+          <a href="https://facebook.github.io/jest/" title="Jest" target="_blank"><img alt="Jest" src="img/jest.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://travis-ci.org/" title="Travis CI" target="_blank"><img alt="Travis CI" src="img/travis.png" class="badge small"></a>
+        </div>
+      </div>
+      <div class="slush-meanjs">
+        <a href="https://www.npmjs.com/package/slush-meanjs" class="pipeline" title="slush-meanjs" target="_blank">slush-meanjs:</a>
+        <br>
+        <div class="packages">
+          <a href="http://slushjs.github.io/" title="Slush" target="_blank"><img alt="Slush" src="img/slush.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://www.npmjs.com/" title="npm" target="_blank"><img alt="npm" src="img/npm.svg" class="badge small"></a>
+          <a href="http://bower.io/" title="Bower" target="_blank"><img alt="Bower" src="img/bower.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+        </div>
+        <div class="lang">
+          <a href="https://angularjs.org/" title="AngularJS" target="_blank"><img alt="AngularJS" src="img/angular.png" class="badge small"></a>
+          <a href="https://lodash.com/" title="lodash" target="_blank"><img alt="lodash" src="img/lodash.png" class="badge small"></a>
+        </div>
+        <div class="endarrow">
+          <img src="img/arrow.png" class="arrow"> ...
+        </div>
+        <br>
+        <div class="styles">
+          <a href="http://lesscss.org/" title="Less" target="_blank"><img alt="Less" src="img/less.png" class="badge small"></a>
+          <a href="http://sass-lang.com/" title="Sass" target="_blank"><img alt="Sass" src="img/sass.svg" class="badge small"></a>
+          <a href="https://github.com/postcss/postcss" title="PostCSS" target="_blank"><img alt="PostCSS" src="img/postcss.svg" class="badge small"></a>
+          <a href="https://github.com/postcss/autoprefixer" title="AutoPrefixer" target="_blank"><img alt="AutoPrefixer" src="img/autoprefixer.png" class="badge small"></a>
+          <br>
+        </div>
+        <br>
+        <br>
+        <div>
+          ... <img src="img/arrow.png" class="arrow">
+          <a href="http://gulpjs.com/" title="Gulp" target="_blank"><img alt="Gulp" src="img/gulp.png" class="badge small"></a>
+          <a href="http://gruntjs.com/" title="Grunt" target="_blank"><img alt="Grunt" src="img/grunt.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" title="Source Maps" target="_blank"><img alt="Source Maps" src="img/sourcemaps.png" class="badge small"></a>
+          <a href="http://livereload.com/" title="LiveReload" target="_blank"><img alt="LiveReload" src="img/livereload.png" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://mochajs.org/" title="Mocha" target="_blank"><img alt="Mocha" src="img/mocha.png" class="badge small"></a>
+          <a href="http://jasmine.github.io/" title="Jasmine" target="_blank"><img alt="Jasmine" src="img/jasmine.png" class="badge small"></a>
+          <a href="http://phantomjs.org/" title="PhantomJS" target="_blank"><img alt="PhantomJS" src="img/phantomjs.png" class="badge small"></a>
+          <a href="https://karma-runner.github.io/0.13/index.html" title="Karma" target="_blank"><img alt="Karma JS" src="img/karma.png" class="badge small"></a>
+          <a href="http://angular.github.io/protractor/" title="Protractor" target="_blank"><img alt="Protractor" src="img/protractor.png" class="badge small"></a>
+          <a href="http://eslint.org/" title="ESLint" target="_blank"><img alt="ESLint" src="img/eslint.svg" class="badge small"></a>
+          <img src="img/arrow.png" class="arrow">
+          <a href="https://travis-ci.org/" title="Travis CI" target="_blank"><img alt="Travis CI" src="img/travis.png" class="badge small"></a>
+        </div>
+      </div>
+    </div>
+
+    <div id="what" class="step what list" data-x="12400" data-y="-200">
+      <img src="img/what.jpg" class="what">
+    </div>
+
+    <div id="libraries-small" class="step libraries list" data-x="14400" data-y="-200">
+      <h1>Malý projekt</h1>
+      <a href="http://vanilla-js.com/" title="Vanilla JS" target="_blank"><img alt="Vanilla JS" src="img/vanilla.png" class="badge"></a>
+      <a href="http://lesscss.org/" title="Less" target="_blank"><img alt="Less" src="img/less.png" class="badge"></a>
+      <br>
+      <a href="http://bower.io/" title="Bower" target="_blank"><img alt="Bower" src="img/bower.png" class="badge big"></a>
+      <br>
+      <a href="https://jquery.com/" title="jQuery" target="_blank"><img alt="jQuery" src="img/jquery.png" class="badge big"></a>
+      <a href="https://lodash.com/" title="lodash" target="_blank"><img alt="lodash" src="img/lodash.png" class="badge"></a>
+    </div>
+
+    <div id="libraries-medium" class="step libraries list" data-x="16400" data-y="-200">
+      <h1>Aplikace</h1>
+      <a href="https://yarnpkg.com/" title="Yarn" target="_blank"><img alt="Yarn" src="img/yarn.png" class="badge"></a>
+      <br>
+      <a href="https://angularjs.org/" title="AngularJS" target="_blank"><img alt="AngularJS" src="img/angular.png" class="badge"></a>
+      <a href="https://facebook.github.io/react/" title="React" target="_blank"><img alt="React" src="img/react.png" class="badge"></a>
+      <a href="http://emberjs.com/" title="Ember.js" target="_blank"><img alt="Ember.js" src="img/ember.png" class="badge"></a>
+      <br>
+      <a href="https://github.com/reactjs/redux" title="Redux" target="_blank" target="_blank"><img alt="Redux" src="img/redux.png" class="badge"></a>
+      <a href="https://mobx.js.org/" title="MobX" target="_blank" target="_blank"><img alt="MobX" src="img/mobx.png" class="badge"></a>
+      <a href="http://reactivex.io/" title="RxJS" target="_blank"><img alt="RxJS" src="img/rx.png" class="badge"></a>
+      <br>
+      <a href="http://sass-lang.com/" title="Sass" target="_blank"><img alt="Sass" src="img/sass.svg" class="badge"></a>
+      <a href="https://webpack.github.io/" title="webpack" target="_blank"><img alt="webpack" src="img/webpack.svg" class="badge"></a>
+    </div>
+
+    <div id="libraries-enterprise" class="step libraries list" data-x="18400" data-y="-200">
+      <h1>Enterprise aplikace</h1>
+      <a href="http://vanilla-js.com/" title="Vanilla JS" target="_blank"><img alt="Vanilla JS" src="img/vanilla.png" class="badge big"></a>
+      <a href="http://sass-lang.com/" title="Sass" target="_blank"><img alt="Sass" src="img/sass.svg" class="badge big"></a>
+      <br>
+      <a href="http://reactivex.io/" title="RxJS" target="_blank"><img alt="RxJS" src="img/rx.png" class="badge big"></a>
+      <br>
+      <a href="https://yarnpkg.com/" title="Yarn" target="_blank"><img alt="Yarn" src="img/yarn.png" class="badge big"></a>
+      <a href="https://webpack.github.io/" title="webpack" target="_blank"><img alt="webpack" src="img/webpack.svg" class="badge big"></a>
+    </div>
+
+    <div id="thankyou" class="step thankyou" data-x="20400" data-y="-200">
+      <h1>DÍKY</h1>
+    </div>
+</div>
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+<script>
+document.addEventListener("keydown", function(e) {
+  if (e.keyCode === 13) {
+    toggleFullScreen();
+  }
+}, false);
+
+document.addEventListener('impress:stepenter', function(e){
+  if (e.target.getAttribute('id') === 'technologies') {
+    [].forEach.call(
+      document.querySelectorAll('.step.list'),
+      function (step) {
+        step.classList.add('highlight');
+      }
+    );
+  }
+
+  if (e.target.getAttribute('id') === 'webdevelopment') {
+    window.setTimeout(function () {
+      document.getElementById('angry').setAttribute('src', 'img/angry.gif');
+    }, 1500);
+  }
+});
+
+document.addEventListener('impress:stepleave', function(e){
+  if (e.target.getAttribute('id') === 'technologies') {
+    [].forEach.call(
+      document.querySelectorAll('.step.list.highlight'),
+      function (step) {
+        step.classList.remove('highlight');
+      }
+    );
+  }
+
+  if (e.target.getAttribute('id') === 'webdevelopment') {
+    document.getElementById('angry').setAttribute('src', '');
+  }
+});
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement &&    // alternative standard method
+      !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+</script>
+</html>
